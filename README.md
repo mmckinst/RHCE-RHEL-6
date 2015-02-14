@@ -6,6 +6,9 @@
 * Configure a system as an iSCSI initiator that persistently mounts an iSCSI target.
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
 * Use shell scripting to automate system maintenance tasks.
+```
+man bash
+```
 * Configure a system to log to a remote system.
 * Configure a system to accept logging from a remote system.
 
