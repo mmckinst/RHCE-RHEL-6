@@ -21,6 +21,34 @@ echo '192.168.10.0/24 via 10.0.0.1' >> /etc/sysconfig/network-scripts/ifcfg-eth0
 echo '192.168.10.0/24 via 10.0.0.1 dev eth0' >> /etc/sysconfig/network-scripts/ifcfg-eth0
 ```
 * Use iptables to implement packet filtering and configure network address translation (NAT).
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-Firewalls-Common_IPTables_Filtering.html
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-Firewalls-FORWARD_and_NAT_Rules.html
+# configure iptables to start on boot and start it
+chkconfig iptables on
+service iptables start
+
+# show current packet filtering
+iptables -nL
+
+# add a new firewall rule using a TUI can be faster and less error/typo prone
+# than doing by hand
+system-config-firewall-tui
+
+# add a new firewall rule using iptables
+# just copy existing line and modify as necessary from /etc/sysconfig/iptables
+# or write one like below
+# iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+emacs /etc/sysconfig/iptables
+
+# configure NAT
+sysctl -w net.ipv4.ip_forward=1
+echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+INSERT MORE STUFF HERE
+INSERT MORE STUFF HERE
+INSERT MORE STUFF HERE
+```
+
 * Use /proc/sys and sysctl to modify and set kernel runtime parameters.
 ```
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-proc-sysctl.html
@@ -37,7 +65,6 @@ echo '50' > /proc/sys/vm/swappiness
 # modify runtime parameter to persist across reboots
 echo 'vm.swappiness=50' >> /etc/sysctl.conf
 ```
-
 * Configure a system to authenticate using Kerberos.
 * Configure a system as an iSCSI initiator that persistently mounts an iSCSI target.
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
