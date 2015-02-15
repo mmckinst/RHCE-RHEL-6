@@ -22,6 +22,22 @@ echo '192.168.10.0/24 via 10.0.0.1 dev eth0' >> /etc/sysconfig/network-scripts/i
 ```
 * Use iptables to implement packet filtering and configure network address translation (NAT).
 * Use /proc/sys and sysctl to modify and set kernel runtime parameters.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-proc-sysctl.html
+
+# get runtime parameter
+sysctl vm.swappiness
+sysctl -a | grep vm.swappiness
+cat /proc/sys/vm/swappiness
+
+# modify runtime parameter
+sysctl -w vm.swappiness=50
+echo '50' > /proc/sys/vm/swappiness
+
+# modify runtime parameter to persist across reboots
+echo 'vm.swappiness=50' >> /etc/sysctl.conf
+```
+
 * Configure a system to authenticate using Kerberos.
 * Configure a system as an iSCSI initiator that persistently mounts an iSCSI target.
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
