@@ -1,5 +1,25 @@
 # SYSTEM CONFIGURATION AND MANAGEMENT
 * Route IP traffic and create static routes.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-static-routes.html
+
+# show routes
+ip r
+
+# add a route
+ip r add 192.168.10.0/24 via 10.0.0.1
+ip r add 192.168.10.0/24 via 10.0.0.1 dev eth0
+ip r add default via 10.0.0.1
+ip r add default via 10.0.0.1 dev eth0
+
+# delete a route
+ip r del 192.168.10.0/24
+ip r del default
+
+# add a static route
+echo '192.168.10.0/24 via 10.0.0.1' >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo '192.168.10.0/24 via 10.0.0.1 dev eth0' >> /etc/sysconfig/network-scripts/ifcfg-eth0
+```
 * Use iptables to implement packet filtering and configure network address translation (NAT).
 * Use /proc/sys and sysctl to modify and set kernel runtime parameters.
 * Configure a system to authenticate using Kerberos.
