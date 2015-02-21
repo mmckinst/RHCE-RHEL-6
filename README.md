@@ -161,7 +161,11 @@ chkconfig named on
 service named start
 ```
 * Configure a caching-only name server to forward DNS queries.
-*Note: Candidates are not expected to configure master or slave name servers.*
+```
+# same as above but add the following to the config file
+forward only;
+forwarders {8.8.8.8; 8.8.4.4;}
+```
 
 ## FTP
 * Configure anonymous-only download.
