@@ -125,6 +125,41 @@ capable of meeting the following objectives for each of the network services lis
 
 ## DNS
 * Configure a caching-only name server.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-BIND.html
+yum install bind
+
+# add/change the following in /etc/named.conf
+# any will listen/respond on all ports
+# allow-query-cache is not in the default config, that line has to be added
+
+listen-on port 53 { any; };
+listen-on-v6 port 53 { any; };
+allow-query { any; };
+allow-query-cache { any; };
+
+listen-on port 53 { 127.0.0.1; 192.168.122.0/24; };
+listen-on-v6 port 53 { ::1; fc00::/7; };
+allow-query { 127.0.0.1; 192.168.122.0/24; };
+allow-query-cache { 127.0.0.1; 192.168.122.0/24; };
+
+# you can use an ACL too
+acl good_servers { 127.0.0.1; 10.0.0.0/8; };
+acl bad_servers { 192.168.0.0/16; };
+
+allow-query { good_servers; };
+allow-query-cache { good_servers; };
+blackhole { bad_servers; };
+
+# edit the firewall or write iptables rules to /etc/sysconfig/iptables to allow port 53 
+system-config-firewall-tui
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 53 -j ACCEPT
+iptables -A INPUT -m state --state NEW -m udp -p udp --dport 53 -j ACCEPT
+
+# chkconfig the service on and restart it
+chkconfig named on
+service named start
+```
 * Configure a caching-only name server to forward DNS queries.
 *Note: Candidates are not expected to configure master or slave name servers.*
 
