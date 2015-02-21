@@ -1,3 +1,34 @@
+# Misc
+## SELinux
+```
+# check and change SELinux mode
+sestatus
+setenforce enforcing
+setenforce permissive
+$VISUAL /etc/selinux/config
+
+# check SELinux booleans
+getsebool -a | grep http
+getsebool httpd_enable_cgi
+
+# change SELinux booleans, use -P to write the policy to the disk so it will persist across reboots
+setsebool httpd_enable_cgi off
+setsebool -P httpd_enable_cgi off
+
+# show context of a file
+ls -lZ
+
+# set or copy the context of a file
+# use semanage fcontext so it will persist across reboots
+# use -R just like chown and chgrp to do it recursively
+chcon -u system_u -t httpd_sys_content_t /var/www/html/index.html
+chcon --reference /var/www/html/ /var/www/html/index.html
+semanage fcontext -a -s system_u -t httpd_sys_content_t /var/www/html/
+
+# restore context if you screw something up
+# use -R just like chown and chgrp to do it recursively
+restorecon /var/www/html/
+```
 # SYSTEM CONFIGURATION AND MANAGEMENT
 * Route IP traffic and create static routes.
 ```
