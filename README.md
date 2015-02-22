@@ -248,5 +248,30 @@ service sshd start
 ```
 # same as above, just edit /etc/ssh/sshd_config as necessary
 ```
+
 ## NTP
 * Synchronize time using other NTP peers.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2_Adding_a_Peer_Address.html
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2_Adding_a_Server_Address.html
+
+# use 'server' if the server is a higher stratum. use 'peer' if the server is of the same stratum
+
+yum install ntp
+
+# remove the nopeer option in /etc/ntp.conf
+restrict default kod nomodify notrap noquery
+
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-Configure_NTP.html#s2-Configure_Access_Control_to_an_NTP_service
+# restrict access to certain IP address
+# copy from the default line but remove the 'noquery' option
+restrict 192.168.56.0 mask 255.255.255.0 nomodify notrap
+
+# open up udp 123
+system-config-firewall-tui
+iptables -A INPUT -m state --state NEW -m udp -p udp --dport 123 -j ACCEPT
+
+# chkconfig the service and start it
+chkconfig ntpd on
+service ntpd start
+```
