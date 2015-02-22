@@ -169,6 +169,31 @@ forwarders {8.8.8.8; 8.8.4.4;}
 
 ## FTP
 * Configure anonymous-only download.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-ftp-servers-vsftpd.html
+yum install vsftpd
+
+# change/set the following in /etc/vsftpd/vsftpd.conf
+#
+# local_enable will forbid local users from logging in. RHCE says to allow
+# anonymous-only which doesn't include local users
+#
+# write_enable will disable commands that can modify a file like DELE, RNFR, and STOR
+anonymous_enable=YES
+local_enable=NO
+write_enable=NO
+
+# adjust firewall as necessary
+system-config-firewall-tui
+
+# block access for IPs using tcpwrappers
+echo 'vsftpd: ALL' >> /etc/hosts.deny
+echo 'vsftpd: 192.168.56.5' >> /etc/hosts.allow
+
+# chkconfig the service on and start it
+chkconfig vsftpd on
+service vsftpd start
+```
 
 ## NFS
 * Provide network shares to specific clients.
