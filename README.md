@@ -1,4 +1,12 @@
 # Misc
+## Test taking tips
+* http://blog.remibergsma.com/2013/10/07/my-tips-for-the-red-hat-rhcsa-rhce-exam/
+## Stuy material
+* http://davidpint.org/rhce/index.php?title=Main_Page
+* https://github.com/bnugent/rhce-study
+* http://b.joaoubaldo.com/linux/rhce-my-study-guide/
+* https://github.com/texastwister/OpenRHCE
+
 ## SELinux
 ```
 # check and change SELinux mode
