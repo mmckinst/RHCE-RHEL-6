@@ -214,6 +214,37 @@ service vsftpd start
 
 ## SSH
 * Configure key-based authentication.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-ssh-configuration-keypairs.html
+yum install openssh-server
+
+# disable password authentication
+echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
+
+# generate and copy a key
+ssh-keygen -b 8192
+ssh-copy-id root@192.168.56.3
+
+# add a user and put a key in place for them
+adduser mmckinst
+mkdir ~mmckinst/.ssh
+echo 'key' ~mmckinst/.ssh/authorized_keys
+chmod 700 ~mmckinst/.ssh
+chmod 600 ~mmckinst/.ssh/authorized_keys
+chown -Rv mmckinst:mmckinst ~mmckinst/.ssh*
+
+# restrict access via IP
+echo 'sshd: ALL' >> /etc/hosts.deny
+echo 'sshd: 192.168.56.5' >> /etc/hosts.allow
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -s 192.168.56.5 -j ACCEPT
+# restrict access to certain users
+echo 'AllowUsers mmckinst' >>  /etc/ssh/sshd_config
+
+# chkconfig and start the service
+chkconfig sshd on
+service sshd start
+```
+
 * Configure additional options described in documentation.
 
 ## NTP
