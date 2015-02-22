@@ -244,8 +244,9 @@ echo 'AllowUsers mmckinst' >>  /etc/ssh/sshd_config
 chkconfig sshd on
 service sshd start
 ```
-
 * Configure additional options described in documentation.
-
+```
+# same as above, just edit /etc/ssh/sshd_config as necessary
+```
 ## NTP
 * Synchronize time using other NTP peers.
