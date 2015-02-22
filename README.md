@@ -190,6 +190,11 @@ system-config-firewall-tui
 echo 'vsftpd: ALL' >> /etc/hosts.deny
 echo 'vsftpd: 192.168.56.5' >> /etc/hosts.allow
 
+# put stuff in a different directory
+mkdir /anon_ftp
+usermod -d /anon_ftp/ ftp
+chcon -Rv --reference /var/ftp/pub/ /anon_ftp
+
 # chkconfig the service on and start it
 chkconfig vsftpd on
 service vsftpd start
