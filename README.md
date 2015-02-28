@@ -208,11 +208,29 @@ print "Content-type: text/html\n\n";
 print "Hello, World.";
 [root@localhost httpd]# 
 
-# adjust selinux
+# fix perms and adjust selinux
+chmod 755 /www/docs/foo.com/hello.pl
 chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
 ```
 * Configure group-managed content.
+```
+# this means to allow a group of users to manage the content of a website (eg
+# members of webdevs group can change the website but members of dba group
+# can't). it doesn't mean to restrict a certain group to a website.
 
+# create group
+groupadd webdevs
+
+# put users in the webdev group
+usermod -a -G webdevs alice
+usermod -a -G webdevs bob
+
+# set owner and group
+chown -Rv apache:webdevs /www/docs/foo.com/
+
+# set the sticky bit for the group
+find /www/docs/foo.com/ -type d -print0 | xargs -0 chmod -v 2775
+```
 ## DNS
 * Configure a caching-only name server.
 ```
