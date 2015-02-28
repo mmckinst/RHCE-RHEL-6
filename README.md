@@ -310,6 +310,25 @@ service vsftpd start
 
 ## NFS
 * Provide network shares to specific clients.
+```
+yum groupinstall "NFS file server"
+
+# configure firewall
+system-config-firewall-tui
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 2049 -j ACCEPT
+
+# add stuff to /etc/exports
+/www	*(ro,sync) 192.168.56.5(rw,sync)
+
+# chkconfig and start services
+chkconfig rpcbind on
+chkconfig nfs on
+chkconfig nfslock on
+
+service rpcbind start
+service nfs start
+service nfslock start
+```
 * Provide network shares suitable for group collaboration.
 
 ## SMB
