@@ -188,6 +188,29 @@ htpasswd -c /www/docs/foo.com/.htpasswd foo
 chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
 ```
 * Deploy a basic CGI application.
+```
+# Same as above
+
+# open up httpd.conf and search for ExecCGI to find the part about AddHandler
+# pay attention to the line above it that says you need to add 'Options ExecCGI'
+# add to vhost like follows
+Options ExecCGI
+AddHandler cgi-script .cgi
+AddHandler cgi-script .pl
+
+# restart apache to re-read the vhost
+service httpd restart
+
+# copy hello world example from /var/www/manual/howto/cgi.html
+[root@localhost httpd]# cat /www/docs/foo.com/hello.pl
+#!/usr/bin/perl
+print "Content-type: text/html\n\n";
+print "Hello, World.";
+[root@localhost httpd]# 
+
+# adjust selinux
+chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
+```
 * Configure group-managed content.
 
 ## DNS
