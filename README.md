@@ -127,6 +127,40 @@ capable of meeting the following objectives for each of the network services lis
 
 ## HTTP/HTTPS
 * Configure a virtual host.
+```
+yum install httpd
+
+# open up port 80 and 443
+system-config-firewall-tui
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+
+# copy the vhost example from /etc/httpd/conf/httpd.conf and in /etc/httpd/conf.d/foo.conf
+# add the AllowOverride thing in, copied from elsewhere in httpd.conf
+[root@localhost httpd]# cat /etc/httpd/conf.d/foo.conf
+NameVirtualHost *:80
+<VirtualHost *:80>
+    ServerAdmin webmaster@foo.com
+    DocumentRoot /www/docs/foo.com
+    ServerName foo.com
+    ErrorLog logs/foo.com-error_log
+    CustomLog logs/foo.com-access_log common
+<Directory />
+    AllowOverride All
+</Directory>
+
+</VirtualHost>
+[root@localhost httpd]# 
+
+# configure selinx
+chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
+
+# block access to certain IPs
+echo -e 'Order deny,allow\nDeny from 192.168.56.6\n' >> /www/docs/foo.com/.htaccess
+
+chkconfig httpd on
+service httpd start
+```
 * Configure private directories.
 * Deploy a basic CGI application.
 * Configure group-managed content.
