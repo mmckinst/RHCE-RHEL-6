@@ -218,6 +218,33 @@ service vsftpd start
 
 ## SMTP
 * Configure a mail transfer agent (MTA) to accept inbound email from other systems.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-email-mta.html#s2-email-mta-postfix
+# http://wiki.centos.org/HowTos/postfix
+yum install postfix
+chkconfig sendmail off
+service sendmail stop
+alternatives --config mta
+
+# connfigure postfix and accept mail for certain domains
+# in /etc/postfix/main.cf set the following
+myhostname = herp.example.com
+mydomain = example.com
+myorigin = $mydomain
+inet_interfaces = all
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain, foo.com, bar.com
+mynetworks = 192.168.56.0/24, 127.0.0.0/8
+
+# use 'postconf' to see the entire postfix config
+# use 'postconf -n' to see only the parts changed from the default value
+
+# configure the firewall
+system-config-firewall-tui
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 25 -j ACCEPT
+
+chkconfig postfix on
+service postfix restart
+```
 * Configure an MTA to forward (relay) email through a smart host.
 
 ## SSH
