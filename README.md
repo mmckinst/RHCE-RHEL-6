@@ -162,6 +162,31 @@ chkconfig httpd on
 service httpd start
 ```
 * Configure private directories.
+```
+# same as above
+
+# install httpd-manual package
+# rpm -ql httpd-manual | xargs -n1 grep AuthType
+# should grep /var/www/manual/howto/auth.html
+# open file and find the code to copy and put in vhost
+# change the Require user line to 'Require valid-user', also documented in the
+# same config file
+   AuthType Basic
+   AuthName "Restricted Files"
+   # (Following line optional)
+   AuthBasicProvider file
+   AuthUserFile /www/docs/foo.com/.htpasswd
+   Require valid-user
+
+# restart httpd because of the new stuff added
+service httpd restart
+
+# create the file for the user foo
+htpasswd -c /www/docs/foo.com/.htpasswd foo
+
+# fix selinux
+chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
+```
 * Deploy a basic CGI application.
 * Configure group-managed content.
 
