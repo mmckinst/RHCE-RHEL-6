@@ -12,6 +12,8 @@
 
 ## SELinux
 ```
+# http://wiki.centos.org/HowTos/SELinux
+
 # check and change SELinux mode
 sestatus
 setenforce enforcing
@@ -386,6 +388,8 @@ exportfs -a
 * Provide network shares to specific clients.
 ```
 # install Samba
+# http://wiki.centos.org/HowTos/SetUpSamba
+
 yum groupinstall "CIFS file server"
 
 # configure the firewall
