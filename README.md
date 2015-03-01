@@ -330,7 +330,23 @@ service nfs start
 service nfslock start
 ```
 * Provide network shares suitable for group collaboration.
+```
+# this is referring to exporting a directory that a group has permission to edit
+# (eg all members of 'developers' have write access to /src and that is exported
+# (and mounted) to a different server used by the QA team).
+#
+# same as above
+groupadd developers
+usermod -a -G developers mmckinst
+mkdir /src
+chgrp -Rv developers /src
+chmod 2775 /src
 
+# add to /etc/exports
+/src	*(ro,sync) 192.168.56.5(rw,sync)
+
+exportfs -a
+```
 ## SMB
 * Provide network shares to specific clients.
 * Provide network shares suitable for group collaboration.
