@@ -114,6 +114,23 @@ man bash
 ```
 * Configure a system to log to a remote system.
 * Configure a system to accept logging from a remote system.
+```
+yum install rsyslog
+
+# add tcp and udp ports 514
+system-config-firewall-tui
+
+# uncomment lines in /etc/rsyslog.conf
+$ModLoad imudp
+$UDPServerRun 514
+$ModLoad imtcp
+$InputTCPServerRun 514
+
+# chkconfig the service on and restart it
+# it is probably already running so do a restart
+chkconfig rsyslog on
+service rsyslog restart
+```
 
 # NETWORK SERVICES
 
