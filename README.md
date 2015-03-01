@@ -378,7 +378,18 @@ chkconfig smb on
 service smb start
 ```
 * Provide network shares suitable for group collaboration.
-
+```
+# this is referring to exporting a directory that a group has permission to edit
+# (eg all members of 'developers' have write access to /src and that is exported
+# (and mounted) to a different server used by the QA team).
+#
+# same as above
+groupadd developers
+usermod -a -G developers mmckinst
+mkdir /shared_stuff
+chgrp -Rv developers /shared_stuff
+chmod 2775 /shared_stuff
+```
 ## SMTP
 * Configure a mail transfer agent (MTA) to accept inbound email from other systems.
 ```
