@@ -115,6 +115,16 @@ yum install pam_krb5
 authconfig-tui
 ```
 * Configure a system as an iSCSI initiator that persistently mounts an iSCSI target.
+```
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Storage_Administration_Guide/ch-iscsi.html#iscsi-api
+#
+# http://manyrootsofallevilrants.blogspot.co.uk/2011/06/configure-system-as-iscsi-initiator.html
+# if you want to set up an iscsi server
+
+yum groupinstall 'iSCSI Storage Client'
+
+iscsiadm -m discovery -t st -p 192.168.56.3
+```
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
 * Use shell scripting to automate system maintenance tasks.
 ```
