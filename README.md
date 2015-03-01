@@ -113,6 +113,17 @@ echo 'vm.swappiness=50' >> /etc/sysctl.conf
 man bash
 ```
 * Configure a system to log to a remote system.
+```
+yum install rsyslog
+
+# edit /etc/rsyslog.conf like below to rsyslog stuff
+*.info;mail.none;authpriv.none;cron.none                @192.168.56.3
+
+# chkconfig the service on and restart it
+# it is probably already running so do a restart
+chkconfig rsyslog on
+service rsyslog restart
+```
 * Configure a system to accept logging from a remote system.
 ```
 yum install rsyslog
