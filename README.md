@@ -108,6 +108,10 @@ echo '50' > /proc/sys/vm/swappiness
 echo 'vm.swappiness=50' >> /etc/sysctl.conf
 ```
 * Configure a system to authenticate using Kerberos.
+```
+yum install pam_krb5
+authconfig-tui
+```
 * Configure a system as an iSCSI initiator that persistently mounts an iSCSI target.
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
 * Use shell scripting to automate system maintenance tasks.
