@@ -350,6 +350,33 @@ exportfs -a
 ```
 ## SMB
 * Provide network shares to specific clients.
+```
+# install Samba
+yum groupinstall "CIFS file server"
+
+# configure the firewall
+system-config-firewall-tui
+
+# make a directory and apply the samba_share_t type to it
+# can also change selinux boolean samba_export_all_ro or samba_export_all_rw to
+# samba will export any type.
+#
+mkdir /shared_stuff
+chcon -R -t samba_share_t /shared_stuff
+
+# edit /etc/samba/smb.conf
+# hosts allow = 192.168.56.0/24
+# hosts deny  = 192.168.56.0/2
+[share]
+comment = "Foo"
+path=/shared_stuff
+read only = yes
+guest ok = yes
+
+# chkconfig the service on and start it
+chkconfig smb on
+service smb start
+```
 * Provide network shares suitable for group collaboration.
 
 ## SMTP
