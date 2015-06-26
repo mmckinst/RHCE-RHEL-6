@@ -30,6 +30,8 @@ END
   config.vm.box = "chef/centos-6.6"
   config.vm.provision "shell",
   inline: 'setenforce enforcing',
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1123919#c32
+  inline: 'yum -y install dbus dbus-python; service messagebus start',
   inline: "echo '#{iptables_config}' > /etc/sysconfig/iptables; service iptables restart"
 
   # test.example.com is used to set up the service you're practicing
