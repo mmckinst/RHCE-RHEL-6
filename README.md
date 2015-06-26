@@ -3,7 +3,7 @@ Objectives come from https://www.redhat.com/en/files/resources/en-rhtr-ex300-rhe
 
 ## Test taking tips
 * http://blog.remibergsma.com/2013/10/07/my-tips-for-the-red-hat-rhcsa-rhce-exam/
-* For emacs users copy /etc/skel/.emacs and set require-final-newline to t so emacs will automatically end a file with a newline. You'd be amazed at how many things break if the file doesn't end with a newline.
+* For emacs users copy /etc/skel/.emacs to ~/ and set require-final-newline to t so emacs will automatically end a file with a newline. You'd be amazed at how many things break if the file doesn't end with a newline.
 
 ## Study material
 * http://davidpint.org/rhce/index.php?title=Main_Page
