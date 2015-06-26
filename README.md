@@ -1,4 +1,5 @@
 # Misc
+Objectives come from https://www.redhat.com/en/files/resources/en-rhtr-ex300-rhel-6-exam-objectives-0000000.pdf .
 
 ## Test taking tips
 * http://blog.remibergsma.com/2013/10/07/my-tips-for-the-red-hat-rhcsa-rhce-exam/
