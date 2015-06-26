@@ -2,6 +2,22 @@
 # vi: set ft=ruby :
 Vagrant.configure(2) do |config|
 
+  iptables_config = <<END
+# Firewall configuration written by system-config-firewall
+# Manual customization of this file is not recommended.
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT
+END
+
   # I was unable to find an existing vagrant box that was close to a default
   # minimal CentOS 6 install. They either had selinux and/or the firewall
   # disabled. If selinux is disabled (not in permissive mode) you have to do a
@@ -13,9 +29,8 @@ Vagrant.configure(2) do |config|
   # restarting the firewall.
   config.vm.box = "chef/centos-6.6"
   config.vm.provision "shell",
-  inline: 'setenforce Enforcing',
-  inline: 'echo "H4sIAGGtjFUCA5WQQWuDQBCF7/6KgdxKp4QcvVndUEuMwWzIofRgdK0r7q7sjkj662tiCiX1ktMb5s33ZpgFrKUVQ962UBhdya/e5iSNhsFKIqHhdAZ3diQUTj5Wt3lvAUmu+3wEe0dGye8JNBVQLR1UshUwqjYEVhRGKaFLUb54T6NDwnp+vN0dOARhyHYcPpb+8tPz12l2DLLorpse+L9RDGAKQAWOchKAOCnb8+B1E+/fWPScsU3AWQTY3Og/XAeyUN2sJaE1s8b9ri07XppUdJe8q2DZGUuwWs0GNJCxdxaOFVrRiIJwkFRfL8HaOMLOmlqeJInyQv3+4yEuTJMk5t4PKjhOtNwBAAA=" | base64 -d | gunzip > /etc/sysconfig/iptables; service iptables restart'
-
+  inline: 'setenforce enforcing',
+  inline: "echo '#{iptables_config}' > /etc/sysconfig/iptables; service iptables restart"
 
   # test.example.com is used to set up the service you're practicing
   config.vm.define "test" do |test|
