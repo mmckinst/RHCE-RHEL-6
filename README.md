@@ -17,7 +17,7 @@ cp /etc/skel/.emacs ~/
 * https://github.com/bnugent/rhce-study
 * http://b.joaoubaldo.com/linux/rhce-my-study-guide/
 * https://github.com/texastwister/OpenRHCE
-* https://oracle-base.com/articles/linux/rhcsa-and-rhce-6
+* https://oracle-base.com/articles/linux/rhcsa-and-rhce-6#rhce
 
 ## SELinux
 ```
