@@ -28,7 +28,7 @@ END
   # enabling the firewall is just a matter of putting a config file in place and
   # restarting the firewall.
   config.vm.box = "chef/centos-6.6"
-  config.vm.provision 'set_selinux_enforcing', type: 'shell', inline: 'setenforce enforcing'
+  config.vm.provision 'set_selinux_enforcing', type: 'shell', inline: 'setenforce enforcing;sed -i "/SELINUX=/cSELINUX=enforcing" /etc/selinux/config'
   config.vm.provision 'install_and_enable_dbus', type: 'shell', inline: 'yum -q -y install dbus dbus-python; service messagebus start >/dev/null;chkconfig messagebus on'
   config.vm.provision 'configure_iptables', type: 'shell', inline: "echo '#{iptables_config}' > /etc/sysconfig/iptables; service iptables restart >/dev/null;chkconfig iptables on"
 
