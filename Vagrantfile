@@ -32,10 +32,17 @@ END
   config.vm.provision 'install_and_enable_dbus', type: 'shell', inline: 'yum -q -y install dbus dbus-python; service messagebus start >/dev/null;chkconfig messagebus on'
   config.vm.provision 'configure_iptables', type: 'shell', inline: "echo '#{iptables_config}' > /etc/sysconfig/iptables; service iptables restart >/dev/null;chkconfig iptables on"
 
-  # test.example.com is used to set up the service you're practicing
-  config.vm.define "test" do |test|
-    test.vm.hostname = 'test.example.com'
-    test.vm.network :private_network, ip: "10.0.0.5", :netmask => "255.255.255.0",
+  # test1.example.com is used to set up the service you're practicing
+  config.vm.define "test1" do |test1|
+    test1.vm.hostname = 'test1.example.com'
+    test1.vm.network :private_network, ip: "10.0.0.5", :netmask => "255.255.255.0",
+    virtualbox__intnet: true
+  end
+
+  # test2.example.com is used to set up the service you're practicing
+  config.vm.define "test2" do |test2|
+    test2.vm.hostname = 'test2.example.com'
+    test2.vm.network :private_network, ip: "10.0.0.6", :netmask => "255.255.255.0",
     virtualbox__intnet: true
   end
 
@@ -44,7 +51,7 @@ END
   # certain IPs, allowed.example.com should be able to access the service
   config.vm.define "allowed" do |allowed|
     allowed.vm.hostname = 'allowed.example.com'
-    allowed.vm.network :private_network, ip: "10.0.0.6", :netmask => "255.255.255.0",
+    allowed.vm.network :private_network, ip: "10.0.0.7", :netmask => "255.255.255.0",
     virtualbox__intnet: true
   end
 
@@ -53,7 +60,7 @@ END
   # certain IPs, blocked.example.com should NOT be able to access the service
   config.vm.define "blocked" do |blocked|
     blocked.vm.hostname = 'blocked.example.com'
-    blocked.vm.network :private_network, ip: "10.0.0.7", :netmask => "255.255.255.0",
+    blocked.vm.network :private_network, ip: "10.0.0.8", :netmask => "255.255.255.0",
     virtualbox__intnet: true
   end
 end
