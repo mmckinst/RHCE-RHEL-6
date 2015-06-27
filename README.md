@@ -32,6 +32,7 @@ $VISUAL /etc/selinux/config
 # check SELinux booleans
 getsebool -a | grep http
 getsebool httpd_enable_cgi
+semanage boolean -l
 
 # change SELinux booleans, use -P to write the policy to the disk so it will persist across reboots
 setsebool httpd_enable_cgi off
