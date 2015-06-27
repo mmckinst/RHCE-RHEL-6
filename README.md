@@ -402,7 +402,7 @@ chmod 2775 /src
 # add to /etc/exports
 /src	*(ro,sync) 192.168.56.5(rw,sync)
 
-exportfs -a
+exportfs -rav
 ```
 ## SMB
 * Provide network shares to specific clients.
