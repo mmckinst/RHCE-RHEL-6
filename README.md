@@ -375,7 +375,7 @@ system-config-firewall-tui
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 2049 -j ACCEPT
 
 # add stuff to /etc/exports
-/www	*(ro,sync) 192.168.56.5(rw,sync)
+/www	*(ro,sync,no_root_squash) 192.168.56.5(rw,sync,no_root_squash)
 
 # chkconfig and start services
 chkconfig rpcbind on
