@@ -3,7 +3,7 @@ Objectives come from https://www.redhat.com/en/files/resources/en-rhtr-ex300-rhe
 
 ## First thing to run when logging in to servers
 ```
-yum -y install emacs-nox nc lynx wget curl system-config-firewall-tui setools policycoreutils-python bind-utils
+yum -y install emacs-nox nc lynx wget curl system-config-firewall-tui setools policycoreutils-python bind-utils cifs-utils
 cp /etc/skel/.emacs ~/
 # edit require-final-newline to be t. lots of things don't work if the file does not end with a newline.
 ```
