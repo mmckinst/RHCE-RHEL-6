@@ -5,7 +5,7 @@ Objectives come from https://www.redhat.com/en/files/resources/en-rhtr-ex300-rhe
 ```
 yum -y install emacs-nox nc lynx wget curl system-config-firewall-tui setools policycoreutils-python bind-utils
 cp /etc/skel/.emacs ~/
-# edit require-final-newline to be t
+# edit require-final-newline to be t. lots of things don't work if the file does not end with a newline.
 ```
 
 ## Test taking tips
