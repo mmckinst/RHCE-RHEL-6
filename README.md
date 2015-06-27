@@ -434,6 +434,11 @@ guest ok = yes
 # chkconfig the service on and start it
 chkconfig smb on
 service smb start
+
+# mount and debug samba shares
+smbclient -L 10.0.0.5 -U%
+smbclient -L 127.0.0.1 -U%
+mount -t cifs -o guest //10.0.0.5/share /mnt/
 ```
 * Provide network shares suitable for group collaboration.
 ```
