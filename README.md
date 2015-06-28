@@ -135,6 +135,8 @@ authconfig-tui
 yum groupinstall 'iSCSI Storage Client'
 
 iscsiadm -m discovery -t st -p 192.168.56.3
+chkconfig iscsi on
+service iscsi restart
 ```
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
 * Use shell scripting to automate system maintenance tasks.
