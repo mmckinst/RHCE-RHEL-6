@@ -467,6 +467,10 @@ alternatives --config mta
 
 # connfigure postfix and accept mail for certain domains
 # in /etc/postfix/main.cf set the following
+#
+# chances are myhostname, mydomain, and myorigin will not have to be changed
+#
+# but inet_interfaces will need to listen on more than localhost
 myhostname = herp.example.com
 mydomain = example.com
 myorigin = $mydomain
