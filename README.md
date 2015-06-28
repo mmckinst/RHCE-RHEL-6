@@ -128,8 +128,9 @@ authconfig-tui
 ```
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Storage_Administration_Guide/ch-iscsi.html#iscsi-api
 #
-# http://manyrootsofallevilrants.blogspot.co.uk/2011/06/configure-system-as-iscsi-initiator.html
-# if you want to set up an iscsi server
+# https://oracle-base.com/articles/linux/linux-iscsi-targets-and-initiators#iscsi-targets
+# to set up a target (not required for RHCE) so you can practice setting up the
+# initiator (required for RHCE)
 
 yum groupinstall 'iSCSI Storage Client'
 
