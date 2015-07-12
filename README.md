@@ -450,7 +450,8 @@ system-config-firewall-tui
 # can also change selinux boolean samba_export_all_ro or samba_export_all_rw to
 # samba will export any type.
 #
-# the chcon command and type are in smb.conf too
+# the chcon command and type are in smb.conf or change samba_export_all_ro=on
+setsebool -P samba_export_all_ro=on
 mkdir /shared_stuff
 chcon -R -t samba_share_t /shared_stuff
 
