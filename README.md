@@ -255,12 +255,14 @@ service httpd start
 # open file and find the code to copy and put in vhost
 # change the Require user line to 'Require valid-user', also documented in the
 # same config file
+<Directory /www/docs/foo.com/private/ >
    AuthType Basic
    AuthName "Restricted Files"
    # (Following line optional)
    AuthBasicProvider file
    AuthUserFile /www/docs/foo.com/.htpasswd
    Require valid-user
+</Directory>
 
 # restart httpd because of the new stuff added
 service httpd restart
