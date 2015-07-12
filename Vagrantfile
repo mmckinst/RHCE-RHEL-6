@@ -29,7 +29,7 @@ END
   # restarting the firewall.
   config.vm.box = "chef/centos-6.6"
   config.vm.provision 'set_selinux_enforcing', type: 'shell', inline: 'setenforce enforcing;sed -i "/SELINUX=/cSELINUX=enforcing" /etc/selinux/config'
-  config.vm.provision 'complicate_selinux', type: 'shell', inline: '/usr/sbin/setsebool httpd_enable_cgi=off httpd_use_cifs=off httpd_use_nfs=off allow_postfix_local_write_mail_spool=off'
+  config.vm.provision 'complicate_selinux', type: 'shell', inline: '/usr/sbin/setsebool -P httpd_enable_cgi=off httpd_use_cifs=off httpd_use_nfs=off allow_postfix_local_write_mail_spool=off'
   config.vm.provision 'install_and_enable_dbus', type: 'shell', inline: 'yum -q -y install dbus dbus-python; service messagebus start >/dev/null;chkconfig messagebus on'
   config.vm.provision 'configure_iptables', type: 'shell', inline: "echo '#{iptables_config}' > /etc/sysconfig/iptables; service iptables restart >/dev/null;chkconfig iptables on"
 
