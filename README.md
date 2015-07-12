@@ -139,6 +139,30 @@ chkconfig iscsi on
 service iscsi restart
 ```
 * Produce and deliver reports on system utilization (processor, memory, disk, and network).
+```
+# processor
+cat /proc/cpuinfo
+top
+
+# memory
+cat /proc/meminfo
+free -m
+vmstat
+sar -r
+
+# disk
+df -h
+iostat
+sar -b
+sar -dp
+iostat
+
+# network
+ifconfig
+sar -n DEV
+sar -n EDEV
+ethtool
+```
 * Use shell scripting to automate system maintenance tasks.
 ```
 man bash
