@@ -280,9 +280,11 @@ chcon -Rv --reference /var/www/html/ /www/docs/foo.com/
 # open up httpd.conf and search for ExecCGI to find the part about AddHandler
 # pay attention to the line above it that says you need to add 'Options ExecCGI'
 # add to vhost like follows
+<Directory /www/docs/foo.com/ >
 Options ExecCGI
 AddHandler cgi-script .cgi
 AddHandler cgi-script .pl
+</Directory>
 
 # restart apache to re-read the vhost
 service httpd restart
