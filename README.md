@@ -71,8 +71,8 @@ ip r del 192.168.10.0/24
 ip r del default
 
 # add a static route
-echo '192.168.10.0/24 via 10.0.0.1' >> /etc/sysconfig/network-scripts/ifcfg-eth0
-echo '192.168.10.0/24 via 10.0.0.1 dev eth0' >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo '192.168.10.0/24 via 10.0.0.1' >> /etc/sysconfig/network-scripts/route-eth0
+echo '192.168.10.0/24 via 10.0.0.1 dev eth0' >> /etc/sysconfig/network-scripts/route-eth0
 ```
 * Use iptables to implement packet filtering and configure network address translation (NAT).
 ```
